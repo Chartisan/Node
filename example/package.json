@@ -1,0 +1,14 @@
+{
+    "name": "example",
+    "private": true,
+    "description": "The next generation charting experience",
+    "scripts": {
+        "server": "node src/example.js"
+    },
+    "author": "Èrik Campobadal Forés <soc@erik.cat>",
+    "license": "MIT",
+    "dependencies": {
+        "@chartisan/node": "file:..",
+        "polka": "^0.5.2"
+    }
+}
