@@ -1,9 +1,11 @@
 {
     "name": "@chartisan/node",
     "version": "1.0.0",
-    "description": "The next generation charting experience",
+    "description": "Chartisan's Node.js backend",
     "main": "dist/index.js",
     "types": "dist/types/index.d.ts",
+    "author": "Èrik Campobadal Forés <soc@erik.cat>",
+    "license": "MIT",
     "repository": {
         "type": "git",
         "url": "git+https://github.com/chartisan/node.git"
@@ -21,8 +23,9 @@
         "Graphic",
         "Graphics"
     ],
-    "author": "Èrik Campobadal Forés <soc@erik.cat>",
-    "license": "MIT",
+    "files": [
+        "dist"
+    ],
     "devDependencies": {
         "typescript": "^3.7.3"
     }

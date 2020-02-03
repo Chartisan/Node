@@ -8,7 +8,7 @@
     "author": "Èrik Campobadal Forés <soc@erik.cat>",
     "license": "MIT",
     "dependencies": {
-        "@chartisan/node": "file:..",
+        "@chartisan/node": "^1.0.0",
         "polka": "^0.5.2"
     }
 }

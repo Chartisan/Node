@@ -51,12 +51,11 @@ export declare class Chartisan {
      *
      * @param {string} name
      * @param {number[]} values
-     * @param {number} id
      * @param {ExtraData} extra
      * @returns {Chartisan}
      * @memberof Chartisan
      */
-    advancedDataset(name: string, values: number[], id: number, extra: ExtraData): Chartisan;
+    advancedDataset(name: string, values: number[], extra: ExtraData | null): Chartisan;
     /**
      * Dataset adds a new simple dataset to the chart. If more advanced control is
      * needed, consider using `AdvancedDataset` instead.
@@ -82,34 +81,14 @@ export declare class Chartisan {
      */
     toObject(): ServerData;
     /**
-     * getNewID returns an ID that is not used by any of the datasets.
-     * Keep in mind, this will panic when n > 2^32 if int is 32 bits.
-     * If you need more than 2^32 datasets, you're crazy.
-     *
-     * @protected
-     * @returns {number}
-     * @memberof Chartisan
-     */
-    protected getNewID(): number;
-    /**
-     * Returns true if the given ID is already used.
-     *
-     * @protected
-     * @param {number} id
-     * @returns {boolean}
-     * @memberof Chartisan
-     */
-    protected idUsed(id: number): boolean;
-    /**
      * Returns a dataset from the chart or creates a new one given the data.
      *
      * @protected
      * @param {string} name
      * @param {number[]} values
-     * @param {number} id
      * @param {ExtraData} extra
      * @returns {[DatasetData, boolean]}
      * @memberof Chartisan
      */
-    protected getOrCreateDataset(name: string, values: number[], id: number, extra: ExtraData): [DatasetData, boolean];
+    protected getOrCreateDataset(name: string, values: number[], extra: ExtraData | null): [DatasetData, boolean];
 }

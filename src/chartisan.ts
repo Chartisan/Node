@@ -37,7 +37,7 @@ export class Chartisan {
         return new Chartisan({
             chart: {
                 labels: [],
-                extra: {}
+                extra: null
             },
             datasets: []
         })
@@ -73,7 +73,6 @@ export class Chartisan {
      *
      * @param {string} name
      * @param {number[]} values
-     * @param {number} id
      * @param {ExtraData} extra
      * @returns {Chartisan}
      * @memberof Chartisan
@@ -81,15 +80,9 @@ export class Chartisan {
     advancedDataset(
         name: string,
         values: number[],
-        id: number,
-        extra: ExtraData
+        extra: ExtraData | null
     ): Chartisan {
-        const [dataset, isNew] = this.getOrCreateDataset(
-            name,
-            values,
-            id,
-            extra
-        )
+        const [dataset, isNew] = this.getOrCreateDataset(name, values, extra)
         if (isNew) {
             // Append the new dataset.
             this.serverData.datasets.push(dataset)
@@ -111,12 +104,7 @@ export class Chartisan {
      * @memberof Chartisan
      */
     dataset(name: string, values: number[]): Chartisan {
-        const [dataset] = this.getOrCreateDataset(
-            name,
-            values,
-            this.getNewID(),
-            {}
-        )
+        const [dataset] = this.getOrCreateDataset(name, values, null)
         this.serverData.datasets.push(dataset)
         return this
     }
@@ -142,46 +130,11 @@ export class Chartisan {
     }
 
     /**
-     * getNewID returns an ID that is not used by any of the datasets.
-     * Keep in mind, this will panic when n > 2^32 if int is 32 bits.
-     * If you need more than 2^32 datasets, you're crazy.
-     *
-     * @protected
-     * @returns {number}
-     * @memberof Chartisan
-     */
-    protected getNewID(): number {
-        for (let n = 0; ; n++) {
-            if (!this.idUsed(n)) {
-                return n
-            }
-        }
-    }
-
-    /**
-     * Returns true if the given ID is already used.
-     *
-     * @protected
-     * @param {number} id
-     * @returns {boolean}
-     * @memberof Chartisan
-     */
-    protected idUsed(id: number): boolean {
-        for (const dataset of this.serverData.datasets) {
-            if (dataset.id == id) {
-                return true
-            }
-        }
-        return false
-    }
-
-    /**
      * Returns a dataset from the chart or creates a new one given the data.
      *
      * @protected
      * @param {string} name
      * @param {number[]} values
-     * @param {number} id
      * @param {ExtraData} extra
      * @returns {[DatasetData, boolean]}
      * @memberof Chartisan
@@ -189,14 +142,13 @@ export class Chartisan {
     protected getOrCreateDataset(
         name: string,
         values: number[],
-        id: number,
-        extra: ExtraData
+        extra: ExtraData | null
     ): [DatasetData, boolean] {
         for (const dataset of this.serverData.datasets) {
-            if (dataset.id == id) {
+            if (dataset.name == name) {
                 return [dataset, false]
             }
         }
-        return [{ id, name, values, extra }, true]
+        return [{ name, values, extra }, true]
     }
 }

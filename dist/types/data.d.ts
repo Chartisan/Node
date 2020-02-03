@@ -27,7 +27,7 @@ export interface ChartData {
      * @type {ExtraData}
      * @memberof ChartData
      */
-    extra: ExtraData;
+    extra: ExtraData | null;
 }
 /**
  * Determine the dataset data.
@@ -36,13 +36,6 @@ export interface ChartData {
  * @interface DatasetData
  */
 export interface DatasetData {
-    /**
-     * Represents the dataset identifier.
-     *
-     * @type {number}
-     * @memberof DatasetData
-     */
-    id: number;
     /**
      * Stores the dataset name.
      *
@@ -63,7 +56,7 @@ export interface DatasetData {
      * @type {ExtraData}
      * @memberof DatasetData
      */
-    extra: ExtraData;
+    extra: ExtraData | null;
 }
 /**
  * Represents the server data.
