@@ -86,8 +86,7 @@ var Chartisan = /** @class */ (function () {
      * @memberof Chartisan
      */
     Chartisan.prototype.dataset = function (name, values) {
-        var dataset = this.getOrCreateDataset(name, values, null)[0];
-        this.serverData.datasets.push(dataset);
+        this.advancedDataset(name, values, null);
         return this;
     };
     /**

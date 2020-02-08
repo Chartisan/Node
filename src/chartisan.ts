@@ -104,8 +104,7 @@ export class Chartisan {
      * @memberof Chartisan
      */
     dataset(name: string, values: number[]): Chartisan {
-        const [dataset] = this.getOrCreateDataset(name, values, null)
-        this.serverData.datasets.push(dataset)
+        this.advancedDataset(name, values, null)
         return this
     }
 
