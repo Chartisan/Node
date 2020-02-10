@@ -65,15 +65,15 @@ var Chartisan = /** @class */ (function () {
      * @memberof Chartisan
      */
     Chartisan.prototype.advancedDataset = function (name, values, extra) {
-        var _a = this.getOrCreateDataset(name, values, extra), dataset = _a[0], isNew = _a[1];
-        if (isNew) {
-            // Append the new dataset.
-            this.serverData.datasets.push(dataset);
-            return this;
+        var dataset = this.getDataset(name);
+        if (dataset) {
+            dataset.name = name;
+            dataset.values = values;
+            dataset.extra = extra;
         }
-        dataset.name = name;
-        dataset.values = values;
-        dataset.extra = extra;
+        else {
+            this.serverData.datasets.push({ name: name, values: values, extra: extra });
+        }
         return this;
     };
     /**
@@ -86,8 +86,7 @@ var Chartisan = /** @class */ (function () {
      * @memberof Chartisan
      */
     Chartisan.prototype.dataset = function (name, values) {
-        this.advancedDataset(name, values, null);
-        return this;
+        return this.advancedDataset(name, values, null);
     };
     /**
      * Returns the string representation JSON encoded.
@@ -108,23 +107,21 @@ var Chartisan = /** @class */ (function () {
         return this.serverData;
     };
     /**
-     * Returns a dataset from the chart or creates a new one given the data.
+     * Gets the dataset with the given name.
      *
      * @protected
      * @param {string} name
-     * @param {number[]} values
-     * @param {ExtraData} extra
-     * @returns {[DatasetData, boolean]}
+     * @returns {ServerData}
      * @memberof Chartisan
      */
-    Chartisan.prototype.getOrCreateDataset = function (name, values, extra) {
+    Chartisan.prototype.getDataset = function (name) {
         for (var _i = 0, _a = this.serverData.datasets; _i < _a.length; _i++) {
             var dataset = _a[_i];
             if (dataset.name == name) {
-                return [dataset, false];
+                return dataset;
             }
         }
-        return [{ name: name, values: values, extra: extra }, true];
+        return null;
     };
     return Chartisan;
 }());

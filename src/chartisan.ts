@@ -82,15 +82,14 @@ export class Chartisan {
         values: number[],
         extra: ExtraData | null
     ): Chartisan {
-        const [dataset, isNew] = this.getOrCreateDataset(name, values, extra)
-        if (isNew) {
-            // Append the new dataset.
-            this.serverData.datasets.push(dataset)
-            return this
+        const dataset = this.getDataset(name)
+        if (dataset) {
+            dataset.name = name
+            dataset.values = values
+            dataset.extra = extra
+        } else {
+            this.serverData.datasets.push({ name, values, extra })
         }
-        dataset.name = name
-        dataset.values = values
-        dataset.extra = extra
         return this
     }
 
@@ -104,8 +103,7 @@ export class Chartisan {
      * @memberof Chartisan
      */
     dataset(name: string, values: number[]): Chartisan {
-        this.advancedDataset(name, values, null)
-        return this
+        return this.advancedDataset(name, values, null)
     }
 
     /**
@@ -129,25 +127,19 @@ export class Chartisan {
     }
 
     /**
-     * Returns a dataset from the chart or creates a new one given the data.
+     * Gets the dataset with the given name.
      *
      * @protected
      * @param {string} name
-     * @param {number[]} values
-     * @param {ExtraData} extra
-     * @returns {[DatasetData, boolean]}
+     * @returns {ServerData}
      * @memberof Chartisan
      */
-    protected getOrCreateDataset(
-        name: string,
-        values: number[],
-        extra: ExtraData | null
-    ): [DatasetData, boolean] {
+    protected getDataset(name: string): DatasetData | null {
         for (const dataset of this.serverData.datasets) {
             if (dataset.name == name) {
-                return [dataset, false]
+                return dataset
             }
         }
-        return [{ name, values, extra }, true]
+        return null
     }
 }

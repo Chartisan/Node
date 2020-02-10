@@ -81,14 +81,12 @@ export declare class Chartisan {
      */
     toObject(): ServerData;
     /**
-     * Returns a dataset from the chart or creates a new one given the data.
+     * Gets the dataset with the given name.
      *
      * @protected
      * @param {string} name
-     * @param {number[]} values
-     * @param {ExtraData} extra
-     * @returns {[DatasetData, boolean]}
+     * @returns {ServerData}
      * @memberof Chartisan
      */
-    protected getOrCreateDataset(name: string, values: number[], extra: ExtraData | null): [DatasetData, boolean];
+    protected getDataset(name: string): DatasetData | null;
 }
